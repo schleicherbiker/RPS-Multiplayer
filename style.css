@@ -1,6 +1,11 @@
-.panel-heading {
+.panel-heading{
     margin: 0 -15px 0 -15px;
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
     font-size: 16px;
+}
+
+.panel-footer {
+    font-family: 'Roboto', sans-serif;
+    margin: 0 -15px 0 -15px;
 }

@@ -12,7 +12,7 @@ firebase.initializeApp(config);
 // Reference Database
 const database = firebase.database();
 
-var player;
+var player = 0;
 
 // Player Join
 $("#submit").click(function() {
@@ -33,7 +33,7 @@ $("#submit").click(function() {
                     1: null
                 });
             }
-            player = "player1";
+            player = 1;
         } else if (snapshot.val()["2"] === undefined) {
             // Write to DB
             if (playerName !== "") {
@@ -46,25 +46,32 @@ $("#submit").click(function() {
                     2: null
                 });
             }
-            player = "player2";
+            player = 2;
         }
     })
 });
 
 // Update HTML on DB Value Change...
-database.ref("players/1").on('value', function(snapshot) { updatePlayer(snapshot, "1"); })  
-//database.ref("players/2").on('value', function(snapshot) { updatePlayer(snapshot, "2"); })
+database.ref("players/1").on('value', function(snapshot) {
+    var name = snapshot.val().name;
+    var losses = snapshot.val().losses;
+    var wins = snapshot.val().wins;
+    $("#player1header").html(name);
+    if (player !== 0)
+        $("#player1").html("Hi " + name + "! You are Player 1!");
+    $("#player1footer").html("Wins: " + wins + " | Losses: " + losses);
+})  
+database.ref("players/2").on('value', function(snapshot) {
+    var name = snapshot.val().name;
+    var losses = snapshot.val().losses;
+    var wins = snapshot.val().wins;
+    $("#player2header").html(name);
+    if (player !== 0)
+        $("#player2").html("Hi " + name + "! You are Player 2!");
+    $("#player2footer").html("Wins: " + wins + " | Losses: " + losses);
+})
 
 // Clear Player on DC
-if (player !== undefined)
+if (player !== undefined) {
     database.ref("players/"+player).onDisconnect().set("");
-
-
-function updatePlayer(snapshot, num) {
-    var player = $("<div>Player 1<div>");
-    var name = $("<div>" + snapshot.val()[num].name + "</div>");
-    var losses = $("<div>" + snapshot.val()[num].losses + "</div>");
-    var wins = $("<div>" + snapshot.val()[num].wins + "</div>");
-    $("#player"+num).empty();
-    $("#player"+num).append(player, name, losses, wins);
 }

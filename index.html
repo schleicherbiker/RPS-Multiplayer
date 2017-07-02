@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Rock Paper Scissors!</title>
+
+    <!--Stylesheets-->
+    <link rel="stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href = "style.css">
+
+    <!--Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <!--Title-->
+        <div class="jumbotron">
+            Fire, Water, Grass!
+            <span class="glyphicon glyphicon-fire"></span>
+            <span class="glyphicon glyphicon-tint"></span>
+            <span class="glyphicon glyphicon-leaf"></span>
+        </div>
+
+        <!--Player Entry-->
+        <input class="form-control" type="text"></input>
+        <button id="submit" class="btn btn-success">Submit</button>
+
+        <!--Game-->
+        <div class="row">
+
+            <!--Player 1 Div-->
+            <div class="text-center col-xs-3 panel panel-primary">
+                <div class="panel-heading">Player 1</div>
+                <div id="player1" class="panel-body"></div>
+            </div>
+
+            <!--Status Text Div-->
+            <div id="infoText" class="col-xs-4 col-xs-offset-1" style="background-color: grey">Status Text</div>
+
+            <!--Player 2 Div-->
+            <div class="text-center col-xs-3 col-xs-offset-1 panel panel-primary">
+                <div class="panel-heading">Player 2</div>
+                <div id="player2" class="panel-body"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

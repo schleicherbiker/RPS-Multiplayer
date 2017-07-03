@@ -12,24 +12,57 @@
 </head>
 
 <body>
+    
+    <!--Title-->
+    <div class="text-center container-fluid">
+        <h1 id="title">Elementz</h1>
+    </div>
+
     <div class="container">
-        <!--Title-->
-        <div class="jumbotron">
-            Fire, Water, Grass!
-            <span class="glyphicon glyphicon-fire"></span>
-            <span class="glyphicon glyphicon-tint"></span>
-            <span class="glyphicon glyphicon-leaf"></span>
+
+        <!--Instructions-->
+        <div id="rules" class="col-xs-8 col-xs-offset-2">
+            <h2 class="text-center">Welcome to Elementz!</h2>
+            <h3>The rules are simple. Players will fight one-on-one by choosing one of three elements.</h3>
+            <div id="ruleset" class="text-center">
+                <h4>Fire beats Nature</h4>
+                <h4>Nature beats Water</h4>
+                <h4>Water beats Fire</h4>
+            </div>
+            <h3>In addition to the rules above, players must also choose an <i><b>elemental affinity</b></i> when they sign up. If you win by choosing an elements that matches your affinity, the win counts as double!</h3>
+            <br></br>
         </div>
 
-        <!--Player Entry-->
-        <input class="form-control" type="text"></input>
-        <button id="submit" class="btn btn-success">Submit</button>
-
-        <!--Game-->
+        <!--Sign-Up-->
         <div class="row">
+            <div id="signup" class="text-center col-xs-4 col-xs-offset-4">
+                <h2><b>Sign Up</b></h2>
+                <h5 class="text-left">Name:</h1>
+                <input class="form-control" type="text"></input>
+                <h5 class="text-left">Affinity:</h2>
+                <div class="text-left row">
+                    <button id="fireAff" class="text-center btn btn-danger btn-affinity"><span class="glyphicon glyphicon-fire"></span></button>
+                    <button id="natureAff" class="text-center btn btn-success btn-affinity"><span class="glyphicon glyphicon-leaf"></span></button>
+                    <button id="waterAff" class="text-center btn btn-primary btn-affinity"><span class="glyphicon glyphicon-tint"></span></button>
+                </div>
+                <button id="submit" class="btn btn-danger">Submit</button>
+            </div>
+        </div>
+        
+        <!--Status Text Div-->
+        <div class="row">
+            <div id="statusText" class="hidden text-center col-xs-6 col-xs-offset-3 panel panel-primary">
+                <div class="panel-body">
+                    <button class="btn btn-danger"><span class="glyphicon glyphicon-fire"></span></button>
+                    <button class="btn btn-primary"><span class="glyphicon glyphicon-tint"></span></button>
+                    <button class="btn btn-success"><span class="glyphicon glyphicon-leaf"></span></button>
+                </div>
+            </div>
+        </div>
 
+        <div class="row">
             <!--Player 1 Div-->
-            <div class="text-center col-xs-3 panel panel-primary">
+            <div class="playerbox hidden text-center col-xs-4 col-xs-offset-1 panel panel-primary">
                 <div id="player1header" class="panel-heading">Player 1</div>
                 <div id="player1" class="panel-body">
                     <button class="btn btn-danger"><span class="glyphicon glyphicon-fire"></span></button>
@@ -39,21 +72,19 @@
                 <div id="player1footer" class="panel-footer" >Wins: NA | Losses: NA</div>
             </div>
 
-            <!--Status Text Div-->
-            <div id="infoText" class="col-xs-4 col-xs-offset-1" style="background-color: grey">Status Text</div>
-
             <!--Player 2 Div-->
-            <div class="text-center col-xs-3 col-xs-offset-1 panel panel-primary">
-                <div class="panel-heading">Player 2</div>
+            <div class="playerbox hidden text-center col-xs-4 col-xs-offset-2 panel panel-primary">
+                <div id="player2header" class="panel-heading">Player 2</div>
                 <div id="player2" class="panel-body">
                     <button class="btn btn-danger"><span class="glyphicon glyphicon-fire"></span></button>
                     <button class="btn btn-primary"><span class="glyphicon glyphicon-tint"></span></button>
                     <button class="btn btn-success"><span class="glyphicon glyphicon-leaf"></span></button>
                 </div>
-                <div id="player1footer" class="panel-footer" >Wins: NA | Losses: NA</div>
+                <div id="player2footer" class="panel-footer" >Wins: NA | Losses: NA</div>
             </div>
-
         </div>
+
+    <!--End of Container-->
     </div>
 
 

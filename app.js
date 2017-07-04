@@ -201,7 +201,7 @@ database.ref("players").on('value', function(snapshot) {
                     losses: snapshot.val()[loser]["losses"] + 1,
                     choice: null
                 })*/
-                console.log("test");
+                console.log("test2");
             }, 6000);
         
         // Else if one player has made a choice 

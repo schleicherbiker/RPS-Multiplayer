@@ -138,40 +138,40 @@ database.ref("players").on('value', function(snapshot) {
             // Add click handlers
             fire.click(function() {
 
-                // Update DB
-                database.ref("players/" + player).update({
-                    choice: $(this).attr("id")
-                })
-
                 // Update HTML
                 $("#player" + player).html(fire);
                 if (snapshot.val()[Math.abs(parseInt(player) - 3)]["choice"] === undefined)
                     $("#statusText").html("Waiting on " + snapshot.val()[otherPlayer]["name"]);
 
-            })
-            nature.click(function() {
-
                 // Update DB
                 database.ref("players/" + player).update({
                     choice: $(this).attr("id")
                 })
-                
+            })
+            nature.click(function() {
+
                 // Update HTML
                 $("#player" + player).html(nature);
                 if (snapshot.val()[Math.abs(parseInt(player) - 3)]["choice"] === undefined)
                     $("#statusText").html("Waiting on " + snapshot.val()[otherPlayer]["name"]);
-            })
-            water.click(function() {
 
                 // Update DB
                 database.ref("players/" + player).update({
                     choice: $(this).attr("id")
                 })
-                
+            
+            })
+            water.click(function() {
+
                 // Update HTML
                 $("#player" + player).html(water);
                 if (snapshot.val()[Math.abs(parseInt(player) - 3)]["choice"] === undefined)
                     $("#statusText").html("Waiting on " + snapshot.val()[otherPlayer]["name"]);
+
+                // Update DB
+                database.ref("players/" + player).update({
+                    choice: $(this).attr("id")
+                })
 
             })
 
@@ -184,24 +184,49 @@ database.ref("players").on('value', function(snapshot) {
         
         // Else if both players have made choices...
         } else if (snapshot.val()["1"]["choice"] !== undefined && snapshot.val()["2"]["choice"] !== undefined) {
-            console.log("both have made choices");
 
             var winner = gameResult(snapshot.val()["1"]["choice"], snapshot.val()["2"]["choice"]);
             var loser = Math.abs(parseInt(winner) - 3);
 
-            $("#statusText").html(snapshot.val()[winner]["name"] + " wins!")
+            // Show winner
+            if (winner === -1) {
+                $("#statusText").html("Tie game!")  
+            } else {
+                $("#statusText").html(snapshot.val()[winner]["name"] + " wins!")
+            }
 
-            // Update Wins and Losses
+            // Show choices
+            var fire = $("<button class='btn btn-danger' id='fire'><span class='glyphicon glyphicon-fire'></span></button>");
+            var nature = $("<button class='btn btn-success' id='nature'><span class='glyphicon glyphicon-leaf'></span></button>");
+            var water = $("<button class='btn btn-primary' id='water'><span class='glyphicon glyphicon-tint'></span></button>");
+            if (snapshot.val()[player]["choice"] === "fire")
+                 $("#player" + player).html(fire);
+            if (snapshot.val()[player]["choice"] === "nature")
+                 $("#player" + player).html(nature);
+            if (snapshot.val()[player]["choice"] === "water")
+                 $("#player" + player).html(water);
+
+
+            // Update Wins and Losses if not a tie...
             setTimeout(function() {
-                /*database.ref("players/" + winner).update({
-                    wins: snapshot.val()[winner]["wins"] + 1,
+
+                if (winner !== -1) {
+                    database.ref("players/" + winner).update({
+                        wins: snapshot.val()[winner]["wins"] + 1,
+                    })
+                    database.ref("players/" + loser).update({
+                        losses: snapshot.val()[loser]["losses"] + 1,
+                    })
+                }
+
+                // Reset Choices
+                database.ref("players/1").update({
                     choice: null
                 })
-                database.ref("players/" + loser).update({
-                    losses: snapshot.val()[loser]["losses"] + 1,
+                database.ref("players/2").update({
                     choice: null
-                })*/
-                console.log("test2");
+                })
+
             }, 6000);
         
         // Else if one player has made a choice 

@@ -119,7 +119,7 @@ database.ref("players").on('value', function(snapshot) {
 
         // If both of them haven't made choices...
         if (snapshot.val()["1"]["choice"] === undefined && snapshot.val()["2"]["choice"] === undefined) {
-            console.log("here");
+            console.log("both have not made choices");
             $("#statusText").html("Choose an element!");
 
             // Make buttons and text
@@ -145,7 +145,8 @@ database.ref("players").on('value', function(snapshot) {
 
                 // Update HTML
                 $("#player" + player).html(fire);
-                $("#statusText").html("Waiting on " + snapshot.val()[otherPlayer]["name"]);
+                if (snapshot.val()[Math.abs(parseInt(player) - 3)]["choice"] === undefined)
+                    $("#statusText").html("Waiting on " + snapshot.val()[otherPlayer]["name"]);
 
             })
             nature.click(function() {
@@ -157,8 +158,8 @@ database.ref("players").on('value', function(snapshot) {
                 
                 // Update HTML
                 $("#player" + player).html(nature);
-                $("#statusText").html("Waiting on " + snapshot.val()[otherPlayer]["name"]);
-
+                if (snapshot.val()[Math.abs(parseInt(player) - 3)]["choice"] === undefined)
+                    $("#statusText").html("Waiting on " + snapshot.val()[otherPlayer]["name"]);
             })
             water.click(function() {
 
@@ -169,7 +170,8 @@ database.ref("players").on('value', function(snapshot) {
                 
                 // Update HTML
                 $("#player" + player).html(water);
-                $("#statusText").html("Waiting on " + snapshot.val()[otherPlayer]["name"]);
+                if (snapshot.val()[Math.abs(parseInt(player) - 3)]["choice"] === undefined)
+                    $("#statusText").html("Waiting on " + snapshot.val()[otherPlayer]["name"]);
 
             })
 
@@ -182,21 +184,29 @@ database.ref("players").on('value', function(snapshot) {
         
         // Else if both players have made choices...
         } else if (snapshot.val()["1"]["choice"] !== undefined && snapshot.val()["2"]["choice"] !== undefined) {
+            console.log("both have made choices");
+
             var winner = gameResult(snapshot.val()["1"]["choice"], snapshot.val()["2"]["choice"]);
             var loser = Math.abs(parseInt(winner) - 3);
-            $("#statusText").html(snapshot.val()[winner]["name"] + " wins!");
-            database.ref("players/" + winner).update({
-                wins: snapshot.val()[winner]["wins"] + 1,
-                choice: null
-            })
-            database.ref("players/" + loser).update({
-                losses: snapshot.val()[loser]["losses"] + 1,
-                choice: null
-            })
 
+            $("#statusText").html(snapshot.val()[winner]["name"] + " wins!")
 
+            // Update Wins and Losses
+            setTimeout(function() {
+                /*database.ref("players/" + winner).update({
+                    wins: snapshot.val()[winner]["wins"] + 1,
+                    choice: null
+                })
+                database.ref("players/" + loser).update({
+                    losses: snapshot.val()[loser]["losses"] + 1,
+                    choice: null
+                })*/
+                console.log("test");
+            }, 6000);
+        
+        // Else if one player has made a choice 
         } else {
-            console.log("There has been some lapse in my logic");
+        
         }
     }
 })
@@ -226,11 +236,3 @@ function gameResult(p1Choice, p2Choice) {
         }
     }
 }
-
-function displayWinner(name) {
-    setTimeout(function() {
-        $("#statusText").html(name + " wins!")
-    }, 3000);
-    console.log("i made it here");
-}
-

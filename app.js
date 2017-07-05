@@ -66,7 +66,8 @@ $("#submit").click(function() {
 // Update Player 1 HTML on DB Value Change...
 database.ref("players/1").on('value', function(snapshot) {
 
-    if (snapshot.val() !== null) {
+    // no need for !== null as null will act the same as false here
+    if (snapshot.val()) {
         var name = snapshot.val().name;
         var losses = snapshot.val().losses;
         var wins = snapshot.val().wins;
@@ -90,7 +91,8 @@ database.ref("players/1").on('value', function(snapshot) {
 // Update Player 2 HTML on DB Value Change...
 database.ref("players/2").on('value', function(snapshot) {
 
-    if (snapshot.val() !== null) {
+    // same as above
+    if (snapshot.val()) {
         var name = snapshot.val().name;
         var losses = snapshot.val().losses;
         var wins = snapshot.val().wins;
@@ -115,10 +117,11 @@ database.ref("players/2").on('value', function(snapshot) {
 database.ref("players").on('value', function(snapshot) {
     
     // If two players are in a game
-    if (snapshot.val()["1"] !== undefined && snapshot.val()["2"] !== undefined) {
+    // undefined will actually work as false here
+    if (snapshot.val()["1"] && snapshot.val()["2"]) {
 
         // If both of them haven't made choices...
-        if (snapshot.val()["1"]["choice"] === undefined && snapshot.val()["2"]["choice"] === undefined) {
+        if (!snapshot.val()["1"]["choice"] && !snapshot.val()["2"]["choice"]) {
             console.log("both have not made choices");
             $("#statusText").html("Choose an element!");
 
@@ -229,9 +232,7 @@ database.ref("players").on('value', function(snapshot) {
 
             }, 6000);
         
-        // Else if one player has made a choice 
-        } else {
-        
+        // No need for the empty else block, nothing will happen if the above conditions aren't met
         }
     }
 })
